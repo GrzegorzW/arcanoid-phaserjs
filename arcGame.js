@@ -10,6 +10,7 @@ function preload() {
 var ball;
 var paddle;
 var bricks;
+var barrier;
 
 var ballOnPaddle = true;
 
@@ -25,8 +26,6 @@ var s;
 function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    //  We check bounds collisions against all walls other than the bottom one
     game.physics.arcade.checkCollision.down = false;
 
     s = game.add.tileSprite(0, 0, 800, 600, 'starfield');
@@ -44,6 +43,14 @@ function create() {
             brick.body.immovable = true;
         }
     }
+
+    barrier = game.add.sprite(game.world.centerX, 300, 'breakout', 'paddle_big.png');
+    barrier.anchor.setTo(0.5, 0.5);
+
+    game.physics.enable(barrier, Phaser.Physics.ARCADE);
+
+    barrier.body.bounce.set(1);
+    barrier.body.immovable = true;
 
     paddle = game.add.sprite(game.world.centerX, 500, 'breakout', 'paddle_big.png');
     paddle.anchor.setTo(0.5, 0.5);
@@ -98,6 +105,7 @@ function update() {
     } else {
         game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this);
         game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+        game.physics.arcade.collide(ball, barrier, ballHitBarrier, null, this);
     }
 
 }
@@ -181,6 +189,28 @@ function ballHitPaddle(_ball, _paddle) {
     else if (_ball.x > _paddle.x) {
         //  Ball is on the right-hand side of the paddle
         diff = _ball.x - _paddle.x;
+        _ball.body.velocity.x = (10 * diff);
+    }
+    else {
+        //  Ball is perfectly in the middle
+        //  Add a little random X to stop it bouncing straight up!
+        _ball.body.velocity.x = 2 + Math.random() * 8;
+    }
+
+}
+
+function ballHitBarrier(_ball, _barrier) {
+
+    var diff = 0;
+
+    if (_ball.x < _barrier.x) {
+        //  Ball is on the left-hand side of the paddle
+        diff = _barrier.x - _ball.x;
+        _ball.body.velocity.x = (-10 * diff);
+    }
+    else if (_ball.x > _barrier.x) {
+        //  Ball is on the right-hand side of the paddle
+        diff = _ball.x - _barrier.x;
         _ball.body.velocity.x = (10 * diff);
     }
     else {

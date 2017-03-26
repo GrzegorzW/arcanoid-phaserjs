@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Arc</title>
     <script type="text/javascript" src="phaser-ce-2.7.3/build/phaser.min.js"></script>
     <style type="text/css">
@@ -11,7 +11,21 @@
     </style>
 </head>
 <body>
-<script type="text/javascript" src="arcGame.js"></script>
+<!--<script type="text/javascript" src="arcGame.js"></script>-->
+
+<script src="phaser-ce-2.7.3/build/phaser.min.js"></script>
+<script src="boot.js"></script>
+<script src="stageFirst.js"></script>
+<script src="stageSecond.js"></script>
+<script>
+    (function () {
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
+        game.state.add("boot", boot);
+        game.state.add("stageFirst", stageFirst);
+        game.state.add("stageSecond", stageSecond);
+        game.state.start("boot");
+    })();
+</script>
 
 </body>
 </html>

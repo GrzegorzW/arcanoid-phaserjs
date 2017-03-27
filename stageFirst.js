@@ -9,10 +9,12 @@ stageFirst.prototype = {
     ballOnPaddle: true,
     livesText: null,
     s: null,
+
+    explosions: null,
     preload: function () {
         this.game.load.atlas('breakout', 'assets/arc/breakout.png', 'assets/arc/breakout.json');
         this.game.load.image('starfield', 'assets/misc/starfield.jpg');
-
+        this.game.load.spritesheet('kaboom', 'assets/arc/explode.png', 128, 128);
     },
     create: function () {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -31,8 +33,13 @@ stageFirst.prototype = {
                 brick = this.bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y + 1) + '_1.png');
                 brick.body.bounce.set(1);
                 brick.body.immovable = true;
+                brick.animations.add('kaboom');
             }
         }
+
+        this.explosions = this.game.add.group();
+        this.explosions.createMultiple(15, 'kaboom');
+        this.explosions.forEach(this.setupExplosion, this);
 
         this.paddle = this.game.add.sprite(this.game.world.centerX, 500, 'breakout', 'paddle_big.png');
         this.paddle.anchor.setTo(0.5, 0.5);
@@ -80,6 +87,12 @@ stageFirst.prototype = {
 
         this.game.input.onDown.add(this.releaseBall, this);
     },
+    setupExplosion: function (explosion) {
+        explosion.anchor.x = 0.5;
+        explosion.anchor.y = 0.5;
+        explosion.animations.add('kaboom');
+
+    },
     update: function () {
         this.paddle.x = this.game.input.x;
 
@@ -97,7 +110,7 @@ stageFirst.prototype = {
         }
 
     },
-    releaseBall: function() {
+    releaseBall: function () {
 
         if (this.ballOnPaddle) {
             this.ballOnPaddle = false;
@@ -108,7 +121,7 @@ stageFirst.prototype = {
         }
 
     },
-    ballLost: function() {
+    ballLost: function () {
 
         this.game.lives--;
         this.livesText.text = 'lives: ' + this.lives;
@@ -124,13 +137,19 @@ stageFirst.prototype = {
             this.ball.animations.stop();
         }
     },
-    gameOver: function() {
+    gameOver: function () {
         this.ball.body.velocity.setTo(0, 0);
 
         this.introText.text = 'Game Over!';
         this.introText.visible = true;
     },
-    ballHitBrick: function(_ball, _brick) {
+    ballHitBrick: function (_ball, _brick) {
+
+
+        //  And create an explosion :)
+        var explosion = this.explosions.getFirstExists(false);
+        explosion.reset(_brick.body.x, _brick.body.y);
+        explosion.play('kaboom', 30, false, true);
 
         _brick.kill();
 
@@ -147,7 +166,7 @@ stageFirst.prototype = {
         }
 
     },
-    ballHitPaddle: function(_ball, _paddle) {
+    ballHitPaddle: function (_ball, _paddle) {
 
         var diff = 0;
 

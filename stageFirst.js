@@ -124,9 +124,19 @@ stageFirst.prototype = {
     ballLost: function () {
 
         this.game.lives--;
-        this.livesText.text = 'lives: ' + this.lives;
+        this.livesText.text = 'lives: ' + this.game.lives;
+
+        console.log(this.game.lives);
 
         if (this.game.lives === 0) {
+
+
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(this.paddle.body.x, this.paddle.body.y);
+            explosion.play('kaboom', 30, false, true);
+
+            this.paddle.kill();
+
             this.gameOver();
         }
         else {
@@ -145,8 +155,6 @@ stageFirst.prototype = {
     },
     ballHitBrick: function (_ball, _brick) {
 
-
-        //  And create an explosion :)
         var explosion = this.explosions.getFirstExists(false);
         explosion.reset(_brick.body.x, _brick.body.y);
         explosion.play('kaboom', 30, false, true);

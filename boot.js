@@ -25,6 +25,6 @@ boot.prototype = {
     },
     play: function(){
         this.game.state.start("stageFirst");
-        this.game.state.start("stageSecond");
+        // this.game.state.start("stageSecond");
     }
 };

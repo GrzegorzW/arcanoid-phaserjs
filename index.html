@@ -17,12 +17,16 @@
 <script src="stage.js"></script>
 <script src="stageFirst.js"></script>
 <script src="stageSecond.js"></script>
+<script src="stageThird.js"></script>
+<script src="gameEnd.js"></script>
 <script>
     (function () {
         var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
         game.state.add("boot", boot);
         game.state.add("stageFirst", stageFirst);
         game.state.add("stageSecond", stageSecond);
+        game.state.add("stageThird", stageThird);
+        game.state.add("gameEnd", gameEnd);
         game.state.start("boot");
     })();
 </script>

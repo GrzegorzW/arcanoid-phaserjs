@@ -1,9 +1,9 @@
-var stageSecond = function (game) {
+var stageThird = function (game) {
 };
 
-stageSecond.prototype = Object.create(stage.prototype);
+stageThird.prototype = Object.create(stage.prototype);
 
-stageSecond.prototype.create = function () {
+stageThird.prototype.create = function () {
     this.preCreate();
 
     this.bricks = this.game.add.group();
@@ -12,7 +12,7 @@ stageSecond.prototype.create = function () {
 
     var brick;
 
-    for (var y = 0; y < 2; y++) {
+    for (var y = 0; y < 4; y++) {
         for (var x = 0; x < 15; x++) {
             brick = this.bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y + 1) + '_1.png');
             brick.body.bounce.set(1);
@@ -28,14 +28,14 @@ stageSecond.prototype.create = function () {
 
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 2; j++) {
-            barrier = this.barriers.create(120 + (i * 245), 50 + (j * 150), 'breakout', 'paddle_big.png');
+            barrier = this.barriers.create(120 + (i * 245), 50 + (j * 250), 'breakout', 'paddle_big.png');
             barrier.body.bounce.set(1);
             barrier.body.immovable = true;
         }
     }
 };
 
-stageSecond.prototype.update = function () {
+stageThird.prototype.update = function () {
     this.paddle.x = this.game.input.x;
 
     if (this.paddle.x < 24) {
@@ -49,10 +49,10 @@ stageSecond.prototype.update = function () {
     } else {
         this.game.physics.arcade.collide(this.ball, this.paddle, this.ballHitPaddle, null, this);
         this.game.physics.arcade.collide(this.ball, this.bricks, this.ballHitBrick, null, this);
-        this.game.physics.arcade.collide(this.ball, this.barriers);
+        this.game.physics.arcade.collide(this.ball, this.barriers, this.ballHitBarrier, null, this);
     }
 };
 
-stageSecond.prototype.getNextStage = function () {
-    return "stageThird";
+stageThird.prototype.getNextStage = function () {
+    return "gameEnd";
 };

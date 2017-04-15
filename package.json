@@ -1,0 +1,12 @@
+{
+  "name": "arc",
+  "version": "1.0.0",
+  "description": "Yet another arcanoid game",
+  "main": "index.html",
+  "author": "Grzegorz Waszkowiak",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^0.9.0",
+    "phaser": "^2.6.2"
+  }
+}

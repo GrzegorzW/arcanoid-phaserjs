@@ -5,7 +5,7 @@ boot.prototype = {
     introText: null,
     s: null,
     preload: function () {
-        this.game.load.image('starfield', 'assets/misc/starfield.jpg');
+        this.game.load.image('starfield', 'assets/arc/starfield.jpg');
     },
     create: function () {
         this.s = this.game.add.tileSprite(0, 0, 800, 600, 'starfield');

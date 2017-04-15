@@ -13,7 +13,7 @@ stage.prototype = {
     explosions: null,
     preload: function () {
         this.game.load.atlas('breakout', 'assets/arc/breakout.png', 'assets/arc/breakout.json');
-        this.game.load.image('starfield', 'assets/misc/starfield.jpg');
+        this.game.load.image('starfield', 'assets/arc/starfield.jpg');
         this.game.load.spritesheet('kaboom', 'assets/arc/explode.png', 128, 128);
     },
     preCreate: function () {
@@ -145,6 +145,7 @@ stage.prototype = {
             this.introText.text = '- Next Level -';
 
             var nextStage = this.getNextStage();
+            this.game.currentLevel++;
             this.game.state.start(nextStage);
         }
 

@@ -1,4 +1,4 @@
-`Yet another arcanoid game`
+**Yet another arcanoid game**
 
 Requirements:
 - https://nodejs.org/en/

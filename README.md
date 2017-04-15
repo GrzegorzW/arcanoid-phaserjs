@@ -9,7 +9,3 @@ Installation:
 - run web server `node node_modules/http-server/bin/http-server -p 8080
 `
 - visit: `http://localhost:8080/index.html`
-
-Description:
-- game consists of three stages
-- 

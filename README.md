@@ -1,6 +1,7 @@
 **Yet another arcanoid game**
 
 Requirements:
+- https://git-scm.com/downloads
 - https://nodejs.org/en/
 - https://www.npmjs.com/
 
